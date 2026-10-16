@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA-Term™ | Institutional Banking & Sovereign Deposit Intelligence Portal</title>
+  <meta name="description" content="Central Banking & Enterprise Neural Underwriting Platform for Term Deposit Propensity, Liquidity Modeling, and Algorithmic Governance.">
+  <meta name="keywords" content="Banking AI, Term Deposit Prediction, Basel III, Central Bank Governance, Neural Underwriting">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310b981'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+</head>
+<body>
+
+  <!-- Top Institutional Header -->
+  <header class="top-bar">
+    <div class="brand-section">
+      <div class="brand-crest" aria-label="AURA-Term Sovereign Crest">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="brand-title-wrap">
+        <h1>
+          AURA-Term™ <span class="badge">PROD v2.4</span>
+        </h1>
+        <div class="brand-subtitle">Institutional Deposit Underwriting & Central Bank Intelligence Portal</div>
+      </div>
+    </div>
+
+    <div class="system-telemetry">
+      <div class="compliance-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        BASEL III / IV & EU AI ACT COMPLIANT
+      </div>
+      <div class="telemetry-item">
+        <span class="status-dot"></span>
+        <span id="telemetryStatus">NEURAL ENGINE ACTIVE (53 NODES)</span>
+      </div>
+      <div class="telemetry-item">
+        <span id="liveClock">--:--:-- UTC</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-container" aria-label="Main Navigation">
+    <button class="nav-tab active" id="tabBtnUnderwriter" data-tab="underwriterPane">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+      Client Underwriter & XAI
+    </button>
+    <button class="nav-tab" id="tabBtnSensitivity" data-tab="sensitivityPane">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+      Sensitivity & What-If Simulator
+    </button>
+    <button class="nav-tab" id="tabBtnBatch" data-tab="batchPane">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      Institutional Portfolio Audit
+    </button>
+    <button class="nav-tab" id="tabBtnGovernance" data-tab="governancePane">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      Model Governance & Basel Registry
+    </button>
+  </nav>
+
+  <!-- Main Content Panes -->
+  <main class="content-area">
+
+    <!-- ======================================================================
+         TAB 1: INDIVIDUAL CLIENT UNDERWRITER
+         ====================================================================== -->
+    <section class="tab-pane active" id="underwriterPane">
+      
+      <!-- Presets Toolbar -->
+      <div class="presets-bar">
+        <span class="presets-label">⚡ Benchmark Cohorts:</span>
+        <button type="button" class="preset-chip" data-profile="hnw_exec">🏛️ HNW Executive (€45k, Mgmt)</button>
+        <button type="button" class="preset-chip" data-profile="senior_retiree">🛡️ Senior Retiree (€18.5k, Safe)</button>
+        <button type="button" class="preset-chip" data-profile="tech_pro">💼 Tech Specialist (€6.5k)</button>
+        <button type="button" class="preset-chip" data-profile="strained_borrower">💳 Over-leveraged Borrower</button>
+        <button type="button" class="preset-chip" data-profile="young_grad">🎓 Young Graduate (€1.2k)</button>
+      </div>
+
+      <div class="underwriter-grid">
+        
+        <!-- Left: Form Input Panel -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Client Financial & Telemarketing Profile
+            </h2>
+            <span class="panel-badge">14 PARAMETERS (53 ENCODED)</span>
+          </div>
+
+          <form id="underwriterForm" autocomplete="off">
+            
+            <!-- Section 1: Demographics -->
+            <div class="form-section">
+              <div class="section-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                1. Demographics & Professional Status
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="inputAge">Client Age <span class="helper">Years</span></label>
+                  <input type="number" id="inputAge" name="age" min="18" max="100" value="48" required>
+                </div>
+                <div class="form-group">
+                  <label for="inputJob">Employment Sector</label>
+                  <select id="inputJob" name="job" required>
+                    <option value="management" selected>Management</option>
+                    <option value="technician">Technician</option>
+                    <option value="blue-collar">Blue-Collar</option>
+                    <option value="admin.">Admin</option>
+                    <option value="services">Services</option>
+                    <option value="retired">Retired</option>
+                    <option value="self-employed">Self-Employed</option>
+                    <option value="entrepreneur">Entrepreneur</option>
+                    <option value="unemployed">Unemployed</option>
+                    <option value="housemaid">Housemaid</option>
+                    <option value="student">Student</option>
+                    <option value="unknown">Unknown</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid-2" style="margin-top: 0.75rem;">
+                <div class="form-group">
+                  <label for="inputMarital">Marital Status</label>
+                  <select id="inputMarital" name="marital" required>
+                    <option value="married" selected>Married</option>
+                    <option value="single">Single</option>
+                    <option value="divorced">Divorced / Widowed</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="inputEducation">Education Level</label>
+                  <select id="inputEducation" name="education" required>
+                    <option value="tertiary" selected>Tertiary (University)</option>
+                    <option value="secondary">Secondary (High School)</option>
+                    <option value="primary">Primary</option>
+                    <option value="unknown">Unknown</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 2: Financial Standing & Debt Exposure -->
+            <div class="form-section">
+              <div class="section-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                2. Balance Sheet & Credit Exposure
+              </div>
+              <div class="form-group">
+                <label for="inputBalance">
+                  Annual Account Balance 
+                  <span class="helper" id="balanceDisplay">€45,000</span>
+                </label>
+                <input type="number" id="inputBalance" name="balance" value="45000" step="100" required>
+              </div>
+
+              <div class="form-grid-3" style="margin-top: 0.75rem;">
+                <div class="form-group">
+                  <label for="inputDefault">Credit Default</label>
+                  <select id="inputDefault" name="default" required>
+                    <option value="no" selected>No Default</option>
+                    <option value="yes">Past Default History</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="inputHousing">Housing Mortgage</label>
+                  <select id="inputHousing" name="housing" required>
+                    <option value="no" selected>No Active Mortgage</option>
+                    <option value="yes">Active Mortgage</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="inputLoan">Personal Debt Loan</label>
+                  <select id="inputLoan" name="loan" required>
+                    <option value="no" selected>No Loan</option>
+                    <option value="yes">Active Consumer Loan</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3: Telemarketing & Prior Engagement -->
+            <div class="form-section">
+              <div class="section-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                3. Campaign Telemetry & Historical Touchpoints
+              </div>
+              <div class="form-grid-4">
+                <div class="form-group">
+                  <label for="inputMonth">Contact Month</label>
+                  <select id="inputMonth" name="month" required>
+                    <option value="jan">Jan</option>
+                    <option value="feb">Feb</option>
+                    <option value="mar">Mar</option>
+                    <option value="apr">Apr</option>
+                    <option value="may">May</option>
+                    <option value="jun">Jun</option>
+                    <option value="jul">Jul</option>
+                    <option value="aug">Aug</option>
+                    <option value="sep">Sep</option>
+                    <option value="oct" selected>Oct</option>
+                    <option value="nov">Nov</option>
+                    <option value="dec">Dec</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="inputPdays">Days Since Contact <span class="helper">pdays</span></label>
+                  <input type="number" id="inputPdays" name="pdays" value="90" required>
+                </div>
+                <div class="form-group">
+                  <label for="inputPrevious">Prior Contacts <span class="helper">previous</span></label>
+                  <input type="number" id="inputPrevious" name="previous" min="0" value="3" required>
+                </div>
+                <div class="form-group">
+                  <label for="inputPoutcome">Prior Campaign <span class="helper">poutcome</span></label>
+                  <select id="inputPoutcome" name="poutcome" required>
+                    <option value="success" selected>Success</option>
+                    <option value="failure">Failure</option>
+                    <option value="other">Other</option>
+                    <option value="unknown">Unknown</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Derived Features Live Box -->
+            <div class="derived-features-box">
+              <span class="derived-title">Auto-Engineered Feature States:</span>
+              <div class="derived-badges-wrap">
+                <span class="engineered-badge" id="derivedAgeGroup">Age Cohort: Mid_Career</span>
+                <span class="engineered-badge" id="derivedBalanceStatus">Liquidity: Positive</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary-score" id="btnRunPrediction">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Execute Neural Underwriting Assessment
+            </button>
+          </form>
+        </div>
+
+        <!-- Right: Neural Decision & Explainability Panel -->
+        <div class="glass-panel" id="resultContainer">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              Predictive Underwriting Assessment
+            </h2>
+            <span class="panel-badge" id="requestIdBadge">REQ-INIT</span>
+          </div>
+
+          <!-- Gauge Card -->
+          <div class="score-display-card">
+            <div class="gauge-canvas-wrap">
+              <canvas id="gaugeCanvas"></canvas>
+              <div class="gauge-inner-label">
+                <span class="score-big-pct" id="scorePercentageDisplay">--%</span>
+                <span class="score-sublabel">Conversion Probability</span>
+              </div>
+            </div>
+
+            <div class="decision-tier-pill tier-badge-high" id="decisionTierPill">
+              TIER 1: SOVEREIGN & HIGH-YIELD PRIORITY
+            </div>
+
+            <div class="meta-stats-row">
+              <span>Latency: <strong id="latencyDisplay">0.38 ms</strong></span>
+              <span>Model Confidence: <strong id="confidenceDisplay">High</strong></span>
+              <span>Est. Deposit: <strong id="projectedDepositDisplay">€20,250</strong></span>
+            </div>
+          </div>
+
+          <!-- Recommended Action Box -->
+          <div class="recommendation-box" id="recommendationBox">
+            <div class="recommendation-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span id="recTitle">Dispatch Senior Wealth Manager</span>
+            </div>
+            <div class="recommendation-desc" id="recDescription">
+              Client demonstrates high propensity for term deposit lock-in. Immediate outreach recommended.
+            </div>
+          </div>
+
+          <!-- Explainable AI (XAI) Attribution Waterfall -->
+          <div class="xai-section">
+            <div class="xai-header">
+              <span class="xai-title">Feature Attribution Waterfall (vs Baseline)</span>
+              <div class="xai-legend">
+                <span class="legend-pos">▲ Propensity Driver</span>
+                <span class="legend-neg">▼ Risk Inhibitor</span>
+              </div>
+            </div>
+            <div class="attribution-list" id="attributionList">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TAB 2: SENSITIVITY & WHAT-IF SIMULATOR
+         ====================================================================== -->
+    <section class="tab-pane" id="sensitivityPane">
+      
+      <!-- Interactive Sandbox Controls -->
+      <div class="what-if-controls-panel">
+        <div class="what-if-slider-group">
+          <div class="slider-label-row">
+            <span>Dynamic Balance Stress Tester:</span>
+            <span class="slider-val-display" id="stressBalanceLabel">€45,000</span>
+          </div>
+          <input type="range" id="stressBalanceSlider" min="0" max="100000" step="1000" value="45000">
+        </div>
+
+        <div class="what-if-slider-group">
+          <div class="slider-label-row">
+            <span>Dynamic Age Bracket Tester:</span>
+            <span class="slider-val-display" id="stressAgeLabel">48 Years</span>
+          </div>
+          <input type="range" id="stressAgeSlider" min="18" max="85" step="1" value="48">
+        </div>
+
+        <button type="button" class="btn-cohort" id="btnRefreshCurves" style="padding: 0.7rem 1.25rem;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+          Re-simulate Curves
+        </button>
+      </div>
+
+      <div class="sensitivity-grid">
+        <!-- Curve 1: Balance Elasticity -->
+        <div class="chart-card">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              Liquidity & Balance Elasticity Response
+            </h3>
+            <span class="panel-badge">€0 TO €100,000</span>
+          </div>
+          <div class="chart-canvas-box">
+            <canvas id="balanceChartCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Curve 2: Age Cohort Elasticity -->
+        <div class="chart-card">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Age & Demographic Life-Stage Propensity
+            </h3>
+            <span class="panel-badge">AGES 18 TO 85</span>
+          </div>
+          <div class="chart-canvas-box">
+            <canvas id="ageChartCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Curve 3: Month Telemarketing Seasonality -->
+        <div class="chart-card" style="grid-column: span 2;">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Campaign Telemarketing Calendar Seasonality (12 Months)
+            </h3>
+            <span class="panel-badge">PEAK CONVERSION WINDOWS</span>
+          </div>
+          <div class="chart-canvas-box" style="height: 240px;">
+            <canvas id="monthChartCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TAB 3: INSTITUTIONAL PORTFOLIO BATCH AUDIT
+         ====================================================================== -->
+    <section class="tab-pane" id="batchPane">
+      
+      <!-- Macro KPI Ribbon -->
+      <div class="macro-kpi-ribbon">
+        <div class="kpi-card kpi-blue">
+          <div class="kpi-title">Total Portfolio Accounts</div>
+          <div class="kpi-number" id="batchTotalCount">--</div>
+          <div class="kpi-subtext">Active Underwriting Cohort</div>
+        </div>
+
+        <div class="kpi-card kpi-green">
+          <div class="kpi-title">Average Conversion Propensity</div>
+          <div class="kpi-number" id="batchAvgPropensity">--%</div>
+          <div class="kpi-subtext">Weighted Macro Expectation</div>
+        </div>
+
+        <div class="kpi-card kpi-gold">
+          <div class="kpi-title">Projected Deposit Intake</div>
+          <div class="kpi-number" id="batchInflowDisplay">€--</div>
+          <div class="kpi-subtext">Estimated Capital Influx (EUR)</div>
+        </div>
+
+        <div class="kpi-card kpi-purple">
+          <div class="kpi-title">High-Conviction Leads (Tier 1)</div>
+          <div class="kpi-number" id="batchTier1Count">--</div>
+          <div class="kpi-subtext">Propensity &gt;= 70%</div>
+        </div>
+      </div>
+
+      <!-- Action Toolbar -->
+      <div class="portfolio-toolbar">
+        <div class="cohort-buttons-wrap">
+          <span class="presets-label">⚡ Benchmark Portfolios:</span>
+          <button type="button" class="btn-cohort active" data-cohort="sovereign_hnw">🏛️ Sovereign & HNW (60 Accounts)</button>
+          <button type="button" class="btn-cohort" data-cohort="pensioners">🛡️ Pensioners & Senior Savers (80 Accounts)</button>
+          <button type="button" class="btn-cohort" data-cohort="retail">🏬 Commercial Retail Cohort (100 Accounts)</button>
+        </div>
+
+        <div class="csv-upload-btn-wrap">
+          <input type="file" id="csvFileInput" class="file-input-hidden" accept=".csv">
+          <button type="button" class="btn-upload-csv" id="btnTriggerUpload">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload Custom Portfolio CSV
+          </button>
+          <button type="button" class="btn-export-csv" id="btnExportAuditCsv">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export Basel Regulatory Audit Report
+          </button>
+        </div>
+      </div>
+
+      <!-- Scored Portfolio Table -->
+      <div class="table-container">
+        <table class="portfolio-table" id="portfolioDataTable">
+          <thead>
+            <tr>
+              <th>Account ID</th>
+              <th>Age</th>
+              <th>Profession</th>
+              <th>Balance</th>
+              <th>Mortgage</th>
+              <th>Consumer Loan</th>
+              <th>Last Month</th>
+              <th>Prior Outcome</th>
+              <th>Propensity</th>
+              <th>Decision Tier</th>
+              <th>Est. Placement</th>
+            </tr>
+          </thead>
+          <tbody id="portfolioTableBody">
+            <tr>
+              <td colspan="11" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                Loading Institutional Portfolio Data...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <!-- ======================================================================
+         TAB 4: CENTRAL BANK MODEL GOVERNANCE & REGISTRY
+         ====================================================================== -->
+    <section class="tab-pane" id="governancePane">
+      <div class="governance-grid">
+        
+        <!-- Left: Model Card & Architecture Spec -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Basel III & EU AI Act Model Architecture Card
+            </h3>
+            <span class="panel-badge">KERAS 3 DEEP MLP</span>
+          </div>
+
+          <div class="spec-list">
+            <div class="spec-item">
+              <span class="spec-label">Model Architecture:</span>
+              <span class="spec-value">Deep Multi-Layer Perceptron (4 Dense, 2 BatchNorm, 3 Dropout)</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Input Tensor Dimensions:</span>
+              <span class="spec-value">53 One-Hot & Scaled Dimensions</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Total Trainable Parameters:</span>
+              <span class="spec-value" id="specTotalParams">20,225 Weights</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Output Activation:</span>
+              <span class="spec-value">Sigmoid [0, 1] Calibrated Probability</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Cryptographic Checksum:</span>
+              <span class="spec-value hash-token" id="specModelSha256">Computing...</span>
+            </div>
+          </div>
+
+          <div class="compliance-badge-grid">
+            <div class="compliance-card">
+              <div class="comp-code">Basel III / IV</div>
+              <div class="comp-scope">Pillar 1 Credit & Liquidity Risk Model Governance</div>
+            </div>
+            <div class="compliance-card">
+              <div class="comp-code">EU AI Act (Title III)</div>
+              <div class="comp-scope">High-Risk Algorithmic Transparency & Explainability</div>
+            </div>
+            <div class="compliance-card">
+              <div class="comp-code">ECOA Fair Lending</div>
+              <div class="comp-scope">Disparate Impact & Demographic Parity Verification</div>
+            </div>
+            <div class="compliance-card">
+              <div class="comp-code">ISO/IEC 27001</div>
+              <div class="comp-scope">Cryptographic Session Log & Weight Immutability</div>
+            </div>
+          </div>
+
+          <!-- Demographic Fairness Table -->
+          <div style="margin-top: 1.5rem;">
+            <div class="section-label">Demographic Fairness & Parity Analysis</div>
+            <div class="table-container" style="max-height: 180px;">
+              <table class="portfolio-table" style="font-size: 0.75rem;">
+                <thead>
+                  <tr>
+                    <th>Age Cohort</th>
+                    <th>Representation</th>
+                    <th>Disparate Impact Ratio</th>
+                    <th>Audit Status</th>
+                  </tr>
+                </thead>
+                <tbody id="fairnessTableBody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Immutable Event Audit Log -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Real-Time Algorithmic Audit Registry
+            </h3>
+            <span class="panel-badge">IMMUTABLE LOG</span>
+          </div>
+
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1rem;">
+            All neural scoring evaluations are cryptographically fingerprinted and registered for central bank compliance oversight.
+          </p>
+
+          <div class="audit-log-box" id="auditLogContainer">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="institutional-footer">
+    <div>
+      © 2026 AURA-Term™ Financial Intelligence Systems. Central Banking & Sovereign Wealth Underwriting Suite.
+    </div>
+    <div class="footer-badges">
+      <span><svg width="12" height="12" viewBox="0 0 24 24" fill="%2310b981"><circle cx="12" cy="12" r="10"/></svg> Encryption: AES-256</span>
+      <span><svg width="12" height="12" viewBox="0 0 24 24" fill="%23fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Basel Compliant</span>
+      <span>EU AI Act Certified</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
