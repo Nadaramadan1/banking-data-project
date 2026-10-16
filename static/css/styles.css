@@ -1208,3 +1208,31 @@ footer.institutional-footer {
   align-items: center;
   gap: 0.35rem;
 }
+
+/* ==========================================================================
+   Governance & Heuristic Simulation Disclosures
+   ========================================================================== */
+
+.heuristic-disclosure-banner {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-left: 4px solid var(--primary-gold);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.heuristic-disclosure-banner strong {
+  color: var(--primary-gold);
+}
+
+.heuristic-note {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  margin-top: 0.4rem;
+  text-align: center;
+  font-style: italic;
+}

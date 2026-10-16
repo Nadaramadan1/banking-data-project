@@ -1,0 +1,10 @@
+# AURA-Term™ Testing and Development Dependencies
+-r requirements.txt
+pytest>=8.0.0,<10.0.0
+httpx>=0.27.0,<1.0.0
+
+# NOTE: For executing native Keras parity checks (tests/run_native_keras_check.py),
+# a dedicated Python environment with TensorFlow and Keras 3.x is required.
+# In this repository, the isolated `.test_venv` environment contains:
+#   tensorflow>=2.16.0
+#   keras>=3.0.0

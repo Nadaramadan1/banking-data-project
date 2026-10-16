@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA-Term™ | Institutional Banking & Sovereign Deposit Intelligence Portal</title>
-  <meta name="description" content="Central Banking & Enterprise Neural Underwriting Platform for Term Deposit Propensity, Liquidity Modeling, and Algorithmic Governance.">
-  <meta name="keywords" content="Banking AI, Term Deposit Prediction, Basel III, Central Bank Governance, Neural Underwriting">
+  <title>AURA-Term™ | Term Deposit Campaign Propensity & Prioritization Portal</title>
+  <meta name="description" content="Neural Propensity Scoring Platform for Retail Term Deposit Marketing Campaign Prioritization and Explainability.">
+  <meta name="keywords" content="Banking AI, Term Deposit Prediction, Marketing Propensity, Machine Learning Governance, Campaign Optimization">
   <link rel="stylesheet" href="/static/css/styles.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310b981'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
@@ -14,7 +14,7 @@
   <!-- Top Institutional Header -->
   <header class="top-bar">
     <div class="brand-section">
-      <div class="brand-crest" aria-label="AURA-Term Sovereign Crest">
+      <div class="brand-crest" aria-label="AURA-Term Brand Crest">
         <svg viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
         </svg>
@@ -23,14 +23,14 @@
         <h1>
           AURA-Term™ <span class="badge">PROD v2.4</span>
         </h1>
-        <div class="brand-subtitle">Institutional Deposit Underwriting & Central Bank Intelligence Portal</div>
+        <div class="brand-subtitle">Term Deposit Campaign Propensity &amp; Interpretability Portal</div>
       </div>
     </div>
 
     <div class="system-telemetry">
       <div class="compliance-pill">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        BASEL III / IV & EU AI ACT COMPLIANT
+        BASEL III / IV &amp; EU AI ACT REFERENCE FRAMEWORK
       </div>
       <div class="telemetry-item">
         <span class="status-dot"></span>
@@ -239,7 +239,7 @@
 
             <button type="submit" class="btn-primary-score" id="btnRunPrediction">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              Execute Neural Underwriting Assessment
+              Execute Neural Propensity Assessment
             </button>
           </form>
         </div>
@@ -249,7 +249,7 @@
           <div class="panel-header">
             <h2 class="panel-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-              Predictive Underwriting Assessment
+              Predictive Propensity Assessment
             </h2>
             <span class="panel-badge" id="requestIdBadge">REQ-INIT</span>
           </div>
@@ -265,7 +265,7 @@
             </div>
 
             <div class="decision-tier-pill tier-badge-high" id="decisionTierPill">
-              TIER 1: SOVEREIGN & HIGH-YIELD PRIORITY
+              TIER 1: HIGH PROPENSITY / PRIORITY OUTREACH
             </div>
 
             <div class="meta-stats-row">
@@ -273,23 +273,24 @@
               <span>Model Confidence: <strong id="confidenceDisplay">High</strong></span>
               <span>Est. Deposit: <strong id="projectedDepositDisplay">€20,250</strong></span>
             </div>
+            <div class="heuristic-note">* Estimated deposit is an illustrative heuristic calculation based on current balance, not an observed customer outcome.</div>
           </div>
 
           <!-- Recommended Action Box -->
           <div class="recommendation-box" id="recommendationBox">
             <div class="recommendation-title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              <span id="recTitle">Dispatch Senior Wealth Manager</span>
+              <span id="recTitle">Priority Relationship Contact</span>
             </div>
             <div class="recommendation-desc" id="recDescription">
-              Client demonstrates high propensity for term deposit lock-in. Immediate outreach recommended.
+              Client demonstrates high propensity for term deposit subscription. Priority campaign outreach recommended.
             </div>
           </div>
 
           <!-- Explainable AI (XAI) Attribution Waterfall -->
           <div class="xai-section">
             <div class="xai-header">
-              <span class="xai-title">Feature Attribution Waterfall (vs Baseline)</span>
+              <span class="xai-title">Single-Variable Baseline Sensitivity Analysis</span>
               <div class="xai-legend">
                 <span class="legend-pos">▲ Propensity Driver</span>
                 <span class="legend-neg">▼ Risk Inhibitor</span>
@@ -384,12 +385,17 @@
          ====================================================================== -->
     <section class="tab-pane" id="batchPane">
       
+      <!-- Heuristic Simulation Notice Banner -->
+      <div class="heuristic-disclosure-banner">
+        ℹ️ <strong>Heuristic Simulation Notice:</strong> Projected deposit intake and conversion rates are rule-of-thumb heuristic estimates calculated for scenario simulation. They do not constitute verified financial forecasts, guaranteed yields, or observed customer commitments.
+      </div>
+
       <!-- Macro KPI Ribbon -->
       <div class="macro-kpi-ribbon">
         <div class="kpi-card kpi-blue">
           <div class="kpi-title">Total Portfolio Accounts</div>
           <div class="kpi-number" id="batchTotalCount">--</div>
-          <div class="kpi-subtext">Active Underwriting Cohort</div>
+          <div class="kpi-subtext">Active Portfolio Cohort</div>
         </div>
 
         <div class="kpi-card kpi-green">
@@ -415,8 +421,8 @@
       <div class="portfolio-toolbar">
         <div class="cohort-buttons-wrap">
           <span class="presets-label">⚡ Benchmark Portfolios:</span>
-          <button type="button" class="btn-cohort active" data-cohort="sovereign_hnw">🏛️ Sovereign & HNW (60 Accounts)</button>
-          <button type="button" class="btn-cohort" data-cohort="pensioners">🛡️ Pensioners & Senior Savers (80 Accounts)</button>
+          <button type="button" class="btn-cohort active" data-cohort="sovereign_hnw">🏛️ High Net Worth &amp; Affluent (60 Accounts)</button>
+          <button type="button" class="btn-cohort" data-cohort="pensioners">🛡️ Pensioners &amp; Senior Savers (80 Accounts)</button>
           <button type="button" class="btn-cohort" data-cohort="retail">🏬 Commercial Retail Cohort (100 Accounts)</button>
         </div>
 
@@ -428,7 +434,7 @@
           </button>
           <button type="button" class="btn-export-csv" id="btnExportAuditCsv">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Export Basel Regulatory Audit Report
+            Export Portfolio Campaign Report
           </button>
         </div>
       </div>
@@ -524,6 +530,9 @@
           <!-- Demographic Fairness Table -->
           <div style="margin-top: 1.5rem;">
             <div class="section-label">Demographic Fairness & Parity Analysis</div>
+            <div style="font-size: 0.72rem; color: #f59e0b; background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25); border-radius: 6px; padding: 0.5rem 0.75rem; margin-bottom: 0.6rem;">
+              &#9888; <strong>Illustrative sample data only.</strong> These figures were not computed against this model or its training data and must not be used as evidence of fairness or regulatory compliance.
+            </div>
             <div class="table-container" style="max-height: 180px;">
               <table class="portfolio-table" style="font-size: 0.75rem;">
                 <thead>
@@ -547,13 +556,13 @@
           <div class="panel-header">
             <h3 class="panel-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Real-Time Algorithmic Audit Registry
+              Session Scoring Audit Registry
             </h3>
-            <span class="panel-badge">IMMUTABLE LOG</span>
+            <span class="panel-badge">SESSION LOG</span>
           </div>
 
           <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1rem;">
-            All neural scoring evaluations are cryptographically fingerprinted and registered for central bank compliance oversight.
+            In-session scoring evaluations are logged in memory for audit review during this session. Logs are not persisted across server restarts.
           </p>
 
           <div class="audit-log-box" id="auditLogContainer">
@@ -569,12 +578,12 @@
   <!-- Institutional Footer -->
   <footer class="institutional-footer">
     <div>
-      © 2026 AURA-Term™ Financial Intelligence Systems. Central Banking & Sovereign Wealth Underwriting Suite.
+      © 2026 AURA-Term™ Analytics Systems. Deposit Campaign Optimization Suite.
     </div>
     <div class="footer-badges">
-      <span><svg width="12" height="12" viewBox="0 0 24 24" fill="%2310b981"><circle cx="12" cy="12" r="10"/></svg> Encryption: AES-256</span>
-      <span><svg width="12" height="12" viewBox="0 0 24 24" fill="%23fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Basel Compliant</span>
-      <span>EU AI Act Certified</span>
+      <span><svg width="12" height="12" viewBox="0 0 24 24" fill="%2310b981"><circle cx="12" cy="12" r="10"/></svg> SHA-256 Checksum</span>
+      <span><svg width="12" height="12" viewBox="0 0 24 24" fill="%23fbbf24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Basel III Reference</span>
+      <span>EU AI Act Reference</span>
     </div>
   </footer>
 

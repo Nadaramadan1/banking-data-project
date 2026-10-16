@@ -1,5 +1,5 @@
 /**
- * AURA-Term™ Institutional Banking & Sovereign Deposit Intelligence Portal
+ * AURA-Term™ Term Deposit Marketing Campaign Propensity Portal
  * Client Application Controller
  */
 
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderPredictionResult(result);
     } catch (err) {
       console.error('Prediction failed:', err);
-      alert('Neural Underwriting scoring failed: ' + err.message);
+      alert('Propensity scoring failed: ' + err.message);
     }
   }
 
@@ -219,7 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
     attributionList.innerHTML = '';
 
     if (!attributions || attributions.length === 0) {
-      attributionList.innerHTML = '<div style="color: var(--text-muted); font-size: 0.75rem;">Attribution computing...</div>';
+      const empty = document.createElement('div');
+      empty.style.cssText = 'color: var(--text-muted); font-size: 0.75rem;';
+      empty.textContent = 'Attribution computing...';
+      attributionList.appendChild(empty);
       return;
     }
 
@@ -231,18 +234,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const item = document.createElement('div');
       item.className = 'attribution-item';
-      item.innerHTML = `
-        <div class="attr-info-row">
-          <span class="attr-name">
-            ${attr.display_name} 
-            <span style="color: var(--text-faint); font-family: var(--font-mono); font-size: 0.68rem;">[${attr.current_value}]</span>
-          </span>
-          <span class="attr-impact-val ${isPos ? 'pos' : 'neg'}">${impactFormatted}</span>
-        </div>
-        <div class="attr-bar-track">
-          <div class="attr-bar-fill ${isPos ? 'pos' : 'neg'}" style="width: ${barWidth}%;"></div>
-        </div>
-      `;
+
+      // Info row
+      const infoRow = document.createElement('div');
+      infoRow.className = 'attr-info-row';
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'attr-name';
+      nameSpan.textContent = attr.display_name + ' ';
+      const valueTag = document.createElement('span');
+      valueTag.style.cssText = 'color: var(--text-faint); font-family: var(--font-mono); font-size: 0.68rem;';
+      valueTag.textContent = `[${attr.current_value}]`;
+      nameSpan.appendChild(valueTag);
+
+      const impactSpan = document.createElement('span');
+      impactSpan.className = `attr-impact-val ${isPos ? 'pos' : 'neg'}`;
+      impactSpan.textContent = impactFormatted;
+
+      infoRow.appendChild(nameSpan);
+      infoRow.appendChild(impactSpan);
+
+      // Bar track
+      const track = document.createElement('div');
+      track.className = 'attr-bar-track';
+      const fill = document.createElement('div');
+      fill.className = `attr-bar-fill ${isPos ? 'pos' : 'neg'}`;
+      fill.style.width = `${barWidth}%`;
+      track.appendChild(fill);
+
+      item.appendChild(infoRow);
+      item.appendChild(track);
       attributionList.appendChild(item);
     });
   }
@@ -346,13 +367,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // 8. Institutional Portfolio Batch Audit
   async function loadPortfolioCohort(cohortId = 'sovereign_hnw') {
     if (portfolioTableBody) {
-      portfolioTableBody.innerHTML = `
-        <tr>
-          <td colspan="11" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
-            Scoring Portfolio Cohort via Vectorized Neural Forward Pass...
-          </td>
-        </tr>
-      `;
+      portfolioTableBody.innerHTML = '';
+      const loadingTr = document.createElement('tr');
+      const loadingTd = document.createElement('td');
+      loadingTd.colSpan = 11;
+      loadingTd.style.cssText = 'text-align: center; padding: 2.5rem; color: var(--text-muted);';
+      loadingTd.textContent = 'Scoring Portfolio Cohort via Vectorized Neural Forward Pass...';
+      loadingTr.appendChild(loadingTd);
+      portfolioTableBody.appendChild(loadingTr);
     }
 
     try {
@@ -382,19 +404,41 @@ document.addEventListener('DOMContentLoaded', () => {
       if (score >= 70) badgeClass = 'score-high';
       else if (score >= 45) badgeClass = 'score-mid';
 
-      tr.innerHTML = `
-        <td style="font-family: var(--font-mono); font-size: 0.72rem; color: #818cf8;">${acc.account_id}</td>
-        <td>${acc.age}</td>
-        <td style="text-transform: capitalize;">${acc.job}</td>
-        <td style="font-family: var(--font-mono);">€${acc.balance.toLocaleString()}</td>
-        <td>${acc.housing === 'yes' ? '🔴 Yes' : '⚪ None'}</td>
-        <td>${acc.loan === 'yes' ? '🔴 Yes' : '⚪ None'}</td>
-        <td style="text-transform: uppercase; font-family: var(--font-mono);">${acc.month}</td>
-        <td style="text-transform: capitalize;">${acc.poutcome}</td>
-        <td><span class="score-badge-cell ${badgeClass}">${score}%</span></td>
-        <td>${acc.tier}</td>
-        <td style="font-family: var(--font-mono); color: #34d399;">€${acc.expected_deposit.toLocaleString()}</td>
-      `;
+      // Helper to create a safe <td>
+      function safeTd(text, style) {
+        const td = document.createElement('td');
+        if (style) td.style.cssText = style;
+        td.textContent = text;
+        return td;
+      }
+
+      tr.appendChild(safeTd(acc.account_id, 'font-family: var(--font-mono); font-size: 0.72rem; color: #818cf8;'));
+      tr.appendChild(safeTd(String(acc.age)));
+      tr.appendChild(safeTd(acc.job, 'text-transform: capitalize;'));
+      tr.appendChild(safeTd(`€${acc.balance.toLocaleString()}`, 'font-family: var(--font-mono);'));
+
+      // Housing — icon + safe text
+      const tdHousing = document.createElement('td');
+      tdHousing.textContent = acc.housing === 'yes' ? '🔴 Yes' : '⚪ None';
+      tr.appendChild(tdHousing);
+
+      const tdLoan = document.createElement('td');
+      tdLoan.textContent = acc.loan === 'yes' ? '🔴 Yes' : '⚪ None';
+      tr.appendChild(tdLoan);
+
+      tr.appendChild(safeTd(acc.month, 'text-transform: uppercase; font-family: var(--font-mono);'));
+      tr.appendChild(safeTd(acc.poutcome, 'text-transform: capitalize;'));
+
+      const tdScore = document.createElement('td');
+      const badge = document.createElement('span');
+      badge.className = `score-badge-cell ${badgeClass}`;
+      badge.textContent = `${score}%`;
+      tdScore.appendChild(badge);
+      tr.appendChild(tdScore);
+
+      tr.appendChild(safeTd(acc.tier));
+      tr.appendChild(safeTd(`€${acc.expected_deposit.toLocaleString()}`, 'font-family: var(--font-mono); color: #34d399;'));
+
       portfolioTableBody.appendChild(tr);
     });
   }
@@ -419,13 +463,14 @@ document.addEventListener('DOMContentLoaded', () => {
       formData.append('file', file);
 
       if (portfolioTableBody) {
-        portfolioTableBody.innerHTML = `
-          <tr>
-            <td colspan="11" style="text-align: center; padding: 2.5rem; color: #38bdf8;">
-              Uploading & Scoring Portfolio CSV via Keras Engine...
-            </td>
-          </tr>
-        `;
+        portfolioTableBody.innerHTML = '';
+        const loadingTr = document.createElement('tr');
+        const loadingTd = document.createElement('td');
+        loadingTd.colSpan = 11;
+        loadingTd.style.cssText = 'text-align: center; padding: 2.5rem; color: #38bdf8;';
+        loadingTd.textContent = 'Uploading & Scoring Portfolio CSV via Keras Engine...';
+        loadingTr.appendChild(loadingTd);
+        portfolioTableBody.appendChild(loadingTr);
       }
 
       try {
@@ -474,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement('a');
       link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `AURA_Basel_Portfolio_Audit_${Date.now()}.csv`);
+      link.setAttribute('download', `AURA_Portfolio_Report_${Date.now()}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -495,12 +540,25 @@ document.addEventListener('DOMContentLoaded', () => {
         fairnessTableBody.innerHTML = '';
         gov.demographic_fairness_parity.forEach(p => {
           const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${p.cohort}</td>
-            <td style="font-family: var(--font-mono);">${p.sample_representation}</td>
-            <td style="font-family: var(--font-mono);">${p.disparate_impact_ratio}</td>
-            <td><span style="color: #34d399; font-weight: 600;">✓ ${p.status}</span></td>
-          `;
+
+          function safeTd(text, style) {
+            const td = document.createElement('td');
+            if (style) td.style.cssText = style;
+            td.textContent = text;
+            return td;
+          }
+
+          tr.appendChild(safeTd(p.cohort));
+          tr.appendChild(safeTd(p.sample_representation, 'font-family: var(--font-mono);'));
+          tr.appendChild(safeTd(p.disparate_impact_ratio, 'font-family: var(--font-mono);'));
+
+          const tdStatus = document.createElement('td');
+          const statusSpan = document.createElement('span');
+          statusSpan.style.cssText = 'color: #f59e0b; font-weight: 600;';
+          statusSpan.textContent = '⚠ ' + p.status;
+          tdStatus.appendChild(statusSpan);
+          tr.appendChild(tdStatus);
+
           fairnessTableBody.appendChild(tr);
         });
       }
@@ -509,22 +567,44 @@ document.addEventListener('DOMContentLoaded', () => {
       if (auditLogContainer) {
         auditLogContainer.innerHTML = '';
         if (!gov.recent_audit_log || gov.recent_audit_log.length === 0) {
-          auditLogContainer.innerHTML = '<div style="color: var(--text-muted); font-size: 0.75rem; padding: 1rem; text-align: center;">No audit events recorded yet. Perform an underwriting prediction to register entries.</div>';
+          const empty = document.createElement('div');
+          empty.style.cssText = 'color: var(--text-muted); font-size: 0.75rem; padding: 1rem; text-align: center;';
+          empty.textContent = 'No audit events recorded yet. Perform a propensity prediction to register entries.';
+          auditLogContainer.appendChild(empty);
         } else {
           gov.recent_audit_log.forEach(log => {
             const div = document.createElement('div');
             div.className = 'audit-entry';
-            div.innerHTML = `
-              <div>
-                <span class="audit-req-id">${log.request_id}</span>
-                <span style="color: var(--text-muted); margin-left: 0.5rem;">Age ${log.client_age} | ${log.client_job} | €${log.balance.toLocaleString()}</span>
-              </div>
-              <div>
-                <span class="audit-score">${(log.propensity_score * 100).toFixed(1)}%</span>
-                <span style="color: var(--text-faint); margin-left: 0.5rem;">${log.decision_tier.split(':')[0]}</span>
-                <span class="audit-time" style="margin-left: 0.75rem;">${log.timestamp}</span>
-              </div>
-            `;
+
+            // Row 1: request ID + demographic info
+            const row1 = document.createElement('div');
+            const reqId = document.createElement('span');
+            reqId.className = 'audit-req-id';
+            reqId.textContent = log.request_id;
+            const demog = document.createElement('span');
+            demog.style.cssText = 'color: var(--text-muted); margin-left: 0.5rem;';
+            demog.textContent = `Age ${log.client_age} | ${log.client_job} | €${log.balance.toLocaleString()}`;
+            row1.appendChild(reqId);
+            row1.appendChild(demog);
+
+            // Row 2: score + tier + timestamp
+            const row2 = document.createElement('div');
+            const scoreSpan = document.createElement('span');
+            scoreSpan.className = 'audit-score';
+            scoreSpan.textContent = `${(log.propensity_score * 100).toFixed(1)}%`;
+            const tierSpan = document.createElement('span');
+            tierSpan.style.cssText = 'color: var(--text-faint); margin-left: 0.5rem;';
+            tierSpan.textContent = log.decision_tier.split(':')[0];
+            const timeSpan = document.createElement('span');
+            timeSpan.className = 'audit-time';
+            timeSpan.style.marginLeft = '0.75rem';
+            timeSpan.textContent = log.timestamp;
+            row2.appendChild(scoreSpan);
+            row2.appendChild(tierSpan);
+            row2.appendChild(timeSpan);
+
+            div.appendChild(row1);
+            div.appendChild(row2);
             auditLogContainer.appendChild(div);
           });
         }

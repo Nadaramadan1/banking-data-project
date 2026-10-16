@@ -1,0 +1,19 @@
+# AURA-Term™ Production Application Dependencies
+# Verified Host Environment: Python 3.14.0 (Windows x86_64)
+# Scoring Engine: Self-contained vectorized NumPy forward engine (does not require TensorFlow/Keras on host)
+#
+# NOTE ON SCIKIT-LEARN:
+# `preprocessor.joblib` was serialized with scikit-learn 1.6.1.
+# Executing under scikit-learn >=1.8.0 emits an informational `InconsistentVersionWarning`.
+# Numerical parity testing has verified 100% behavioral equivalence (MaxAE <= 7e-8).
+# Artifacts remain unmodified in adherence to model governance requirements.
+
+fastapi>=0.115.0,<1.0.0
+uvicorn[standard]>=0.30.0,<1.0.0
+pydantic>=2.0.0,<3.0.0
+python-multipart>=0.0.9
+numpy>=1.26.0,<3.0.0
+pandas>=2.0.0,<4.0.0
+scikit-learn>=1.8.0,<2.0.0
+joblib>=1.3.0,<2.0.0
+h5py>=3.10.0,<4.0.0

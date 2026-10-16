@@ -139,21 +139,21 @@ class BankingModelEngine:
 
     def forward_pass(self, X: np.ndarray) -> np.ndarray:
         """High-performance vectorized neural network feed-forward inference."""
-        # Layer 1: Dense (53->128) + BatchNorm + ReLU
+        # Layer 1: Dense (53->128, relu) + Layer 2: BatchNorm (eps=0.001)
         z1 = np.dot(X, self.w0) + self.b0
-        bn1 = self._batch_norm(z1, self.gamma0, self.beta0, self.mean0, self.var0)
-        a1 = self._relu(bn1)
+        a1 = self._relu(z1)
+        bn1 = self._batch_norm(a1, self.gamma0, self.beta0, self.mean0, self.var0)
 
-        # Layer 2: Dense (128->64) + BatchNorm + ReLU
-        z2 = np.dot(a1, self.w1) + self.b1
-        bn2 = self._batch_norm(z2, self.gamma1, self.beta1, self.mean1, self.var1)
-        a2 = self._relu(bn2)
+        # Layer 4: Dense (128->64, relu) + Layer 5: BatchNorm (eps=0.001)
+        z2 = np.dot(bn1, self.w1) + self.b1
+        a2 = self._relu(z2)
+        bn2 = self._batch_norm(a2, self.gamma1, self.beta1, self.mean1, self.var1)
 
-        # Layer 3: Dense (64->32) + ReLU
-        z3 = np.dot(a2, self.w2) + self.b2
+        # Layer 7: Dense (64->32, relu)
+        z3 = np.dot(bn2, self.w2) + self.b2
         a3 = self._relu(z3)
 
-        # Layer 4: Dense (32->1) + Sigmoid output
+        # Layer 9: Dense (32->1, sigmoid output)
         z4 = np.dot(a3, self.w3) + self.b3
         return self._sigmoid(z4)
 
@@ -242,7 +242,7 @@ class BankingModelEngine:
         }
 
     def _compute_explainability(self, client_dict: dict, actual_prob: float) -> list:
-        """Calculates marginal SHAP-like attribution values for top financial variables."""
+        """Single-Variable Baseline Sensitivity Analysis: calculates marginal perturbation deltas against a reference baseline."""
         features_to_check = [
             ("poutcome", "Previous Campaign Outcome"),
             ("month", "Contact Month"),
@@ -292,40 +292,40 @@ class BankingModelEngine:
         return attributions
 
     def _formulate_decision(self, prob: float, client: dict) -> dict:
-        """Formulates institutional banking decision tiers and next-best-action guidance."""
+        """Formulates campaign outreach priority tiers and next-best-action guidance."""
         balance = client.get("balance", 0)
         expected_deposit = max(1000, round(balance * 0.45, -2)) if balance > 0 else 2500
 
         if prob >= 0.70:
-            tier = "Tier 1: Sovereign & High-Yield Priority"
+            tier = "Tier 1: High Propensity / Priority Outreach"
             tier_badge = "CONFIRMED_HIGH_PROPENSITY"
             tier_color = "#10B981" # Emerald Green
-            action_title = "Dispatch Senior Wealth / Institutional Relationship Manager"
+            action_title = "Priority Campaign Outreach / Direct Relationship Contact"
             action_desc = (
-                f"Client demonstrates exceptionally high term-deposit conversion likelihood ({prob*100:.1f}%). "
-                f"Target with Sovereign Term Certificate offering with estimated placement capacity of €{expected_deposit:,.0f}."
+                f"Client demonstrates high term-deposit conversion likelihood ({prob*100:.1f}%). "
+                f"Recommended for priority fixed-term deposit campaign outreach with simulated placement capacity of €{expected_deposit:,.0f}."
             )
-            regulatory_flag = "Compliant - Basel Capital Inflow Candidate"
+            regulatory_flag = "Operational Flag: Priority Marketing Candidate"
         elif prob >= 0.45:
-            tier = "Tier 2: Qualified Retail Opportunity"
+            tier = "Tier 2: Moderate Propensity / Standard Outreach"
             tier_badge = "MODERATE_NUDGE_CANDIDATE"
             tier_color = "#F59E0B" # Amber Gold
-            action_title = "Automated Omnichannel Digital Nudge & Incentive Rate"
+            action_title = "Automated Omnichannel Digital Nudge & Promotional Rate"
             action_desc = (
-                f"Client is in the conversion threshold zone ({prob*100:.1f}%). "
-                "Deploy automated digital banking app notification offering promotional 3-month fixed rate to secure liquidity."
+                f"Client is in the moderate conversion propensity range ({prob*100:.1f}%). "
+                "Deploy automated digital banking app notification offering promotional 3-month fixed rate."
             )
-            regulatory_flag = "Standard Retail Outreach Monitoring"
+            regulatory_flag = "Operational Flag: Standard Marketing Outreach Monitoring"
         else:
-            tier = "Tier 3: Low Conversion / Capital Preservation Hold"
+            tier = "Tier 3: Low Propensity / Marketing Suppression"
             tier_badge = "RESTRICTED_OR_HOLD"
             tier_color = "#EF4444" # Ruby Red
-            action_title = "Marketing Suppression / Retention Focus"
+            action_title = "Campaign Suppression / Alternative Product Focus"
             action_desc = (
-                f"Client exhibits low propensity to lock capital into term deposits ({prob*100:.1f}%). "
-                "Prevent telemarketing fatigue and cross-sell liquid buffer accounts or debt-consolidation instruments instead."
+                f"Client exhibits low propensity to subscribe to term deposits ({prob*100:.1f}%). "
+                "Suppress direct telemarketing contact to reduce campaign costs and customer fatigue."
             )
-            regulatory_flag = "Low Yield - Avoid Disproportionate Marketing"
+            regulatory_flag = "Operational Flag: Low Propensity - Suppression Recommended"
 
         return {
             "tier_name": tier,
@@ -334,7 +334,8 @@ class BankingModelEngine:
             "action_title": action_title,
             "action_description": action_desc,
             "regulatory_flag": regulatory_flag,
-            "estimated_deposit_volume": expected_deposit
+            "estimated_deposit_volume": expected_deposit,
+            "deposit_estimate_notice": "Heuristic simulation calculation based on current balance, not an observed customer outcome."
         }
 
     def predict_batch(self, records: list) -> dict:
@@ -394,6 +395,7 @@ class BankingModelEngine:
             "low_propensity_accounts": tier3_count,
             "total_projected_inflow_eur": total_projected_deposit,
             "conversion_rate_projected": round((tier1_count + tier2_count * 0.5) / total_count * 100, 1),
+            "simulation_notice": "Projected deposit intake and conversion rates are heuristic simulation estimates, not validated financial forecasts or guaranteed yields.",
             "execution_time_ms": batch_time_ms,
             "accounts": results
         }
@@ -549,10 +551,20 @@ class BankingModelEngine:
         return records
 
     def get_governance_metadata(self) -> dict:
-        """Returns EU AI Act and Basel III/IV model governance telemetry."""
+        """Returns model architecture telemetry and reference governance framework metadata.
+
+        NOTE: compliance_standards entries are reference frameworks cited for
+        alignment guidance — they do not represent active certifications or
+        regulatory approvals of this specific model.
+
+        NOTE: demographic_fairness_parity values are ILLUSTRATIVE SAMPLE DATA
+        included for UI layout purposes only. They have NOT been computed against
+        this model or its training data and must NOT be used as evidence of
+        fairness compliance.
+        """
         return {
-            "model_name": "AURA-Term™ Deep Neural Deposit Classifier",
-            "model_version": "2.4.0-Production",
+            "model_name": "AURA-Term Deep Neural Deposit Classifier",
+            "model_version": "2.4.0",
             "sha256_checksum": self.model_sha256,
             "architecture": {
                 "framework": "Keras 3 / Scikit-Learn Pipeline / Vectorized Forward Engine",
@@ -571,19 +583,37 @@ class BankingModelEngine:
                 ],
                 "total_trainable_parameters": self.total_parameters
             },
+            # These entries name the reference frameworks this system was designed
+            # to be aligned with. They are NOT certifications or approvals.
             "compliance_standards": [
-                {"code": "Basel III / IV", "scope": "Pillar 1 Credit & Liquidity Risk Model Governance"},
-                {"code": "EU AI Act Title III", "scope": "High-Risk AI System Explainability & Transparency (XAI)"},
-                {"code": "ECOA / Fair Lending", "scope": "Disparate Impact & Demographic Parity Verification"},
-                {"code": "ISO/IEC 27001", "scope": "Algorithmic Integrity & Cryptographic Session Hashing"}
+                {"code": "Basel III / IV", "scope": "Pillar 1 Credit & Liquidity Risk Model Governance",
+                 "notice": "Reference framework — not a certified Basel-compliant system"},
+                {"code": "EU AI Act Title III", "scope": "High-Risk AI System Explainability & Transparency (XAI)",
+                 "notice": "Reference framework — no EU AI Act conformity assessment completed"},
+                {"code": "ECOA / Fair Lending", "scope": "Disparate Impact & Demographic Parity",
+                 "notice": "Reference framework — fairness metrics below are illustrative only"},
+                {"code": "ISO/IEC 27001", "scope": "Algorithmic Integrity & Cryptographic Session Hashing",
+                 "notice": "Reference framework — no ISO 27001 certification held"}
             ],
+            # WARNING: The values below are ILLUSTRATIVE SAMPLE DATA only.
+            # They were not computed against this model or its training dataset.
+            # Do not use these figures as evidence of fairness or regulatory compliance.
             "demographic_fairness_parity": [
-                {"cohort": "Young (<25)", "sample_representation": "8.4%", "disparate_impact_ratio": "1.02", "status": "Compliant"},
-                {"cohort": "Early Career (25-35)", "sample_representation": "29.1%", "disparate_impact_ratio": "0.98", "status": "Compliant"},
-                {"cohort": "Mid Career (35-50)", "sample_representation": "38.6%", "disparate_impact_ratio": "1.00", "status": "Compliant (Reference)"},
-                {"cohort": "Older (50-65)", "sample_representation": "16.7%", "disparate_impact_ratio": "1.03", "status": "Compliant"},
-                {"cohort": "Senior (65+)", "sample_representation": "7.2%", "disparate_impact_ratio": "1.08", "status": "Compliant"}
+                {"cohort": "Young (<25)", "sample_representation": "8.4%",
+                 "disparate_impact_ratio": "1.02", "status": "Illustrative"},
+                {"cohort": "Early Career (25-35)", "sample_representation": "29.1%",
+                 "disparate_impact_ratio": "0.98", "status": "Illustrative"},
+                {"cohort": "Mid Career (35-50)", "sample_representation": "38.6%",
+                 "disparate_impact_ratio": "1.00", "status": "Illustrative (Reference)"},
+                {"cohort": "Older (50-65)", "sample_representation": "16.7%",
+                 "disparate_impact_ratio": "1.03", "status": "Illustrative"},
+                {"cohort": "Senior (65+)", "sample_representation": "7.2%",
+                 "disparate_impact_ratio": "1.08", "status": "Illustrative"}
             ],
+            "fairness_data_notice": (
+                "Demographic fairness figures are ILLUSTRATIVE SAMPLE DATA only. "
+                "They have not been validated against this model or its training data."
+            ),
             "recent_audit_log": self.audit_log[:25]
         }
 
